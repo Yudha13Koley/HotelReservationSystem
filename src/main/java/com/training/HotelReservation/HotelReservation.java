@@ -79,7 +79,7 @@ public class HotelReservation {
 		int n=BookingDays.size();
 		int b=WeekendDays.size();
 		int a=n-b;
-		if(customerType.equalsIgnoreCase("normal")) {
+		if(customerType.equalsIgnoreCase("regular")) {
 		int min=Hotels.stream().min((h1,h2)->h1.calculateTotalCharge(a, b)-h2.calculateTotalCharge(a, b))
 				.orElse(null).calculateTotalCharge(a,b);
 		Predicate<Hotel>P2=(h->h.calculateTotalCharge(a, b)==min);
@@ -103,7 +103,7 @@ public class HotelReservation {
 		int n=BookingDays.size();
 		int b=WeekendDays.size();
 		int a=n-b;
-		if(customerType.equalsIgnoreCase("normal"))
+		if(customerType.equalsIgnoreCase("regular"))
 		{
 		Hotel maxRatedHotel=Hotels.stream().sorted(Comparator.comparing(Hotel::getRating).reversed()).findFirst().orElse(null);
 		System.out.println(maxRatedHotel.getName()+", Rating : "+maxRatedHotel.getRating()+" Total Rates : "+maxRatedHotel.calculateTotalCharge(a, b)+"$");
