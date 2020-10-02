@@ -13,9 +13,15 @@ public class HotelReservation {
 	private List<Hotel> Hotels;
 	public List<Calendar> BookingDays;
 	public List<Calendar>WeekendDays;
+	public String customerType;
 	public HotelReservation() {
 		Hotels=new LinkedList<>();
 		BookingDays=new LinkedList<>();
+	}
+	public HotelReservation(String str) {
+		Hotels=new LinkedList<>();
+		BookingDays=new LinkedList<>();
+		customerType=str;
 	}
 	public void addHotels() {
 		System.out.println("Reading Inputs From A File : ");
@@ -73,6 +79,7 @@ public class HotelReservation {
 		int n=BookingDays.size();
 		int b=WeekendDays.size();
 		int a=n-b;
+		if(customerType.equalsIgnoreCase("normal")) {
 		int min=Hotels.stream().min((h1,h2)->h1.calculateTotalCharge(a, b)-h2.calculateTotalCharge(a, b))
 				.orElse(null).calculateTotalCharge(a,b);
 		Predicate<Hotel>P2=(h->h.calculateTotalCharge(a, b)==min);
@@ -81,11 +88,30 @@ public class HotelReservation {
 				findFirst().orElse(null);
 				System.out.println(minCostHotel.getName()+", Rating : "+minCostHotel.getRating()+" Total Rates : "+min+"$");
 	}
+		if(customerType.equalsIgnoreCase("reward"))
+	{
+			int min=Hotels.stream().min((h1,h2)->h1.calculateTotalChargeForSpecial(a, b)-h2.calculateTotalChargeForSpecial(a, b))
+					.orElse(null).calculateTotalChargeForSpecial(a,b);
+			Predicate<Hotel>P2=(h->h.calculateTotalChargeForSpecial(a, b)==min);
+			Hotel minCostHotel=Hotels.stream().filter(P2).
+					sorted(Comparator.comparingInt(Hotel::getRating).reversed()).
+					findFirst().orElse(null);
+					System.out.println(minCostHotel.getName()+", Rating : "+minCostHotel.getRating()+" Total Rates : "+min+"$");
+	}
+	}
 	public void findBestRatedHotel() {
 		int n=BookingDays.size();
 		int b=WeekendDays.size();
 		int a=n-b;
+		if(customerType.equalsIgnoreCase("normal"))
+		{
 		Hotel maxRatedHotel=Hotels.stream().sorted(Comparator.comparing(Hotel::getRating).reversed()).findFirst().orElse(null);
 		System.out.println(maxRatedHotel.getName()+", Rating : "+maxRatedHotel.getRating()+" Total Rates : "+maxRatedHotel.calculateTotalCharge(a, b)+"$");
+		}
+		if(customerType.equalsIgnoreCase("reward"))
+		{
+			Hotel maxRatedHotel=Hotels.stream().sorted(Comparator.comparing(Hotel::getRating).reversed()).findFirst().orElse(null);
+			System.out.println(maxRatedHotel.getName()+", Rating : "+maxRatedHotel.getRating()+" Total Rates : "+maxRatedHotel.calculateTotalChargeForSpecial(a, b)+"$");	
+		}
 	}
 }

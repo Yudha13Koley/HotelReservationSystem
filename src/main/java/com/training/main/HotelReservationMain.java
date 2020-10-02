@@ -5,10 +5,10 @@ import com.training.HotelReservation.HotelReservation;
 public class HotelReservationMain {
 	public static void main(String[] args) {
 		System.out.println("Welcome to Hotel Reservation System ! ");
-		HotelReservation h1=new HotelReservation();
+		HotelReservation h1=new HotelReservation("ReWaRd");
 		h1.addHotels();
 		h1.bookHotelDates();
-		h1.findBestRatedHotel();
+		h1.findCheapestGoodRatedHotel();
 		h1.printHotels();
 	}		
 	}
