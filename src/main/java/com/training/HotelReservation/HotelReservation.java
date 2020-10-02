@@ -28,6 +28,8 @@ public class HotelReservation {
 			h.setNormalPricePerDay(sc.nextInt());
 			h.setWeekendPricePerDay(sc.nextInt());
 			h.setRating(sc.nextInt());
+			h.setSpecialNormalPricePerDay(sc.nextInt());
+			h.setSpecialWeekendPricePerDay(sc.nextInt());
 			Hotels.add(h);
 			}
             sc.close();
