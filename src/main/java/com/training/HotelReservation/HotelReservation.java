@@ -73,8 +73,10 @@ public class HotelReservation {
 		int a=n-b;
 		int min=Hotels.stream().min((h1,h2)->h1.calculateTotalCharge(a, b)-h2.calculateTotalCharge(a, b))
 				.orElse(null).calculateTotalCharge(a,b);
-		Hotels.stream().forEach(h1->{if(h1.calculateTotalCharge(a, b)==min)
-			System.out.print(h1.getName()+" ");});
-				System.out.println(", Total Rates : "+min+"$");
+		Predicate<Hotel>P2=(h->h.calculateTotalCharge(a, b)==min);
+		Hotel minCostHotel=Hotels.stream().filter(P2).
+				sorted(Comparator.comparingInt(Hotel::getRating).reversed()).
+				findFirst().orElse(null);
+				System.out.println(minCostHotel.getName()+", Rating : "+minCostHotel.getRating()+" Total Rates : "+min+"$");
 	}
 }
