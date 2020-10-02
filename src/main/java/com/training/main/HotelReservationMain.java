@@ -7,7 +7,8 @@ public class HotelReservationMain {
 		System.out.println("Welcome to Hotel Reservation System ! ");
 		HotelReservation h1=new HotelReservation();
 		h1.addHotels();
-		h1.findCheapestHotel();
+		h1.bookHotelDates();
+		h1.findBestRatedHotel();
 		h1.printHotels();
 	}		
 	}

@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class HotelReservation {
 	private List<Hotel> Hotels;
 	public List<Calendar> BookingDays;
+	public List<Calendar>WeekendDays;
 	public HotelReservation() {
 		Hotels=new LinkedList<>();
 		BookingDays=new LinkedList<>();
@@ -43,7 +44,7 @@ public class HotelReservation {
 			Hotels.stream().forEach(n->{System.out.println(n);});
 		}
 	}
-	public int bookHotelDates() {
+	public void bookHotelDates() {
 		File obj=new File("D:\\study\\JavaOracle\\HotelReservationSystem\\inputs\\dateinputs.txt");
 		try {
 			Scanner sc=new Scanner(obj);
@@ -63,13 +64,12 @@ public class HotelReservation {
 			} catch (FileNotFoundException e) {
 			System.out.println("No Dates Found !");
 		}
-		return BookingDays.size();
-	}
-	public void findCheapestHotel() {
-		int n=bookHotelDates();
 		Predicate<Calendar>P1=(h->h.get(Calendar.DAY_OF_WEEK)==0||h.get(Calendar.DAY_OF_WEEK)==6);
-		List<Calendar>Weekend=BookingDays.stream().filter(P1).collect(Collectors.toList());
-		int b=Weekend.size();
+		WeekendDays=BookingDays.stream().filter(P1).collect(Collectors.toList());
+	}
+	public void findCheapestGoodRatedHotel() {
+		int n=BookingDays.size();
+		int b=WeekendDays.size();
 		int a=n-b;
 		int min=Hotels.stream().min((h1,h2)->h1.calculateTotalCharge(a, b)-h2.calculateTotalCharge(a, b))
 				.orElse(null).calculateTotalCharge(a,b);
@@ -78,5 +78,12 @@ public class HotelReservation {
 				sorted(Comparator.comparingInt(Hotel::getRating).reversed()).
 				findFirst().orElse(null);
 				System.out.println(minCostHotel.getName()+", Rating : "+minCostHotel.getRating()+" Total Rates : "+min+"$");
+	}
+	public void findBestRatedHotel() {
+		int n=BookingDays.size();
+		int b=WeekendDays.size();
+		int a=n-b;
+		Hotel maxRatedHotel=Hotels.stream().sorted(Comparator.comparing(Hotel::getRating).reversed()).findFirst().orElse(null);
+		System.out.println(maxRatedHotel.getName()+", Rating : "+maxRatedHotel.getRating()+" Total Rates : "+maxRatedHotel.calculateTotalCharge(a, b)+"$");
 	}
 }
