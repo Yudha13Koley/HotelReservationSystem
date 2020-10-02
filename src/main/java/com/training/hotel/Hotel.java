@@ -5,7 +5,14 @@ public class Hotel {
 	private String Name;
 	private int NormalPricePerDay;
 	private int WeekendPricePerDay;
+	private int Rating;
 	
+	public int getRating() {
+		return Rating;
+	}
+	public void setRating(int rating) {
+		Rating = rating;
+	}
 	public int getWeekendPricePerDay() {
 		return WeekendPricePerDay;
 	}
@@ -30,7 +37,7 @@ public class Hotel {
 	@Override
 	public String toString() {
 		return "Hotel [Name=" + Name + ", NormalPricePerDay=" + NormalPricePerDay + ", WeekendPricePerDay="
-				+ WeekendPricePerDay + "]";
+				+ WeekendPricePerDay + ", Rating=" + Rating + "]";
 	}
 
 	

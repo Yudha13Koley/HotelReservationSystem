@@ -26,6 +26,7 @@ public class HotelReservation {
 			h.setName(sc.next());
 			h.setNormalPricePerDay(sc.nextInt());
 			h.setWeekendPricePerDay(sc.nextInt());
+			h.setRating(sc.nextInt());
 			Hotels.add(h);
 			}
             sc.close();
