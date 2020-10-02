@@ -1,6 +1,5 @@
 package com.training.HotelReservation;
 
-import java.util.LinkedList;
 import com.training.hotel.Hotel;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +9,7 @@ import java.util.*;
 
 public class HotelReservation {
 	private List<Hotel> Hotels;
-	public List<Date> BookingDays;
+	public List<Calendar> BookingDays;
 	public HotelReservation() {
 		Hotels=new LinkedList<>();
 		BookingDays=new LinkedList<>();
@@ -24,6 +23,7 @@ public class HotelReservation {
 			Hotel h=new Hotel();
 			h.setName(sc.next());
 			h.setNormalPricePerDay(sc.nextInt());
+			h.setWeekendPricePerDay(sc.nextInt());
 			Hotels.add(h);
 			}
             sc.close();
@@ -49,7 +49,9 @@ public class HotelReservation {
 			{
 			try {
 				Date date=sdf.parse(sc.next());
-				BookingDays.add(date);
+				Calendar c=Calendar.getInstance();
+				c.setTime(date);
+				BookingDays.add(c);
 			    } catch (ParseException e) {
 			System.out.println("Invalid Type Input !");
 			}
@@ -60,14 +62,4 @@ public class HotelReservation {
 		}
 		return BookingDays.size();
 	}
-	public void findCheapestHotel() {
-		int n=bookHotelDates();
-		System.out.println(Hotels.stream()
-				.min((h1,h2)->h1.getNormalPricePerDay()*n-h2.getNormalPricePerDay()*n)
-				.orElse(null).getName()
-				+", Total Rates : "+Hotels.stream()
-				.min((h1,h2)->h1.getNormalPricePerDay()*n-h2.getNormalPricePerDay()*n)
-				.orElse(null).getNormalPricePerDay()*n+"$");
-	}
-
 }
