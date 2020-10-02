@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class HotelReservation {
 	private List<Hotel> Hotels;
@@ -61,5 +63,17 @@ public class HotelReservation {
 			System.out.println("No Dates Found !");
 		}
 		return BookingDays.size();
+	}
+	public void findCheapestHotel() {
+		int n=bookHotelDates();
+		Predicate<Calendar>P1=(h->h.get(Calendar.DAY_OF_WEEK)==0||h.get(Calendar.DAY_OF_WEEK)==6);
+		List<Calendar>Weekend=BookingDays.stream().filter(P1).collect(Collectors.toList());
+		int b=Weekend.size();
+		int a=n-b;
+		int min=Hotels.stream().min((h1,h2)->h1.calculateTotalCharge(a, b)-h2.calculateTotalCharge(a, b))
+				.orElse(null).calculateTotalCharge(a,b);
+		Hotels.stream().forEach(h1->{if(h1.calculateTotalCharge(a, b)==min)
+			System.out.print(h1.getName()+" ");});
+				System.out.println(", Total Rates : "+min+"$");
 	}
 }
